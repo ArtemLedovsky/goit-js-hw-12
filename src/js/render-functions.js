@@ -1,16 +1,28 @@
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const gallery = document.querySelector('.gallery-container')
-const lightbox = new SimpleLightbox(".gallery-container a" , { 
-            captions: true,
-            captionsData: 'alt',
-            captionDelay: 250
+const gallery = document.querySelector('.gallery-container');
+const loader = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more-btn');
+const lightbox = new SimpleLightbox('.gallery-container a', {
+  captions: true,
+  captionsData: 'alt',
+  captionDelay: 250,
 });
 
-export function createGallery(data) { 
-    const galleryMarkup = data.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => 
-        { return`
+export function createGallery(data) {
+  const galleryMarkup = data
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        return `
         <li class="gallery-item">
         <a href="${largeImageURL}">
           <img src="${webformatURL}" alt="${tags}" />
@@ -21,23 +33,46 @@ export function createGallery(data) {
             <div class = "statictics-text"><h3>Downloads</h3><p>${downloads}</p></div>
           </div>
         </a></li>`;
-    }).join('');
-    switchLoaderClass()
-  gallery.insertAdjacentHTML('beforeend', galleryMarkup)
+      }
+    )
+    .join('');
+  hideLoader();
+  gallery.insertAdjacentHTML('beforeend', galleryMarkup);
 
-  lightbox.refresh()
-  
+  lightbox.refresh();
 }
-
 
 export function clearGallery() {
-  const clear = ''
-  gallery.innerHTML = clear
+  const clear = '';
+  gallery.innerHTML = clear;
 }
 
-export function switchLoaderClass() {
-  const loader = document.querySelector('.loader')
-  loader.classList.toggle('hidden')
+export function showLoader() {
+  loader.classList.remove('hidden');
 }
 
+export function hideLoader() {
+  loader.classList.add('hidden');
+}
 
+export function showBtn() {
+  loadMoreBtn.classList.remove('hidden');
+}
+export function hideBtn() {
+  loadMoreBtn.classList.add('hidden');
+}
+export function enableBtn() {
+  loadMoreBtn.disabled = false;
+}
+export function disableBtn() {
+  loadMoreBtn.disabled = true;
+}
+
+export function scrollPage() {
+  const elementHeight =
+    gallery.firstElementChild.getBoundingClientRect().height;
+  window.scrollBy({
+    top: elementHeight * 2,
+    behavior: 'smooth',
+  });
+}
