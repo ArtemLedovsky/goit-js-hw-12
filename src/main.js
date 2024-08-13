@@ -39,7 +39,6 @@ async function handleSearchImages(event) {
     return;
   }
   showLoader();
-  showBtn();
 
   params.page = 1;
 
@@ -52,11 +51,13 @@ async function handleSearchImages(event) {
     createGallery(hits);
 
     if (params.maxPage > 1) {
+      showBtn();
       enableBtn();
       loadMoreBtn.addEventListener('click', handleLoadMore);
-    } else {
-      hideBtn();
     }
+    // else {
+    //   hideBtn();
+    // }
     if (hits.length === 0) {
       iziToast.error({
         message:
@@ -82,6 +83,7 @@ async function handleLoadMore() {
   } catch (error) {
     iziToast.error({ title: 'Error', message: error.message });
   } finally {
+    hideLoader();
     if (params.page === params.maxPage) {
       loadMoreBtn.removeEventListener('click', handleLoadMore);
       hideBtn();
