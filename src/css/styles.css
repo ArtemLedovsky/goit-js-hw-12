@@ -149,7 +149,9 @@ img {
   transition: background-color 250ms linear;
 }
 
-.load-more-btn:hover,
-.load-more-btn:disabled {
+.load-more-btn:hover {
   background-color: #6c8cff;
+}
+.load-more-btn:disabled {
+  background-color: #94a6e7;
 }

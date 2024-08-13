@@ -45,6 +45,7 @@ export function createGallery(data) {
 export function clearGallery() {
   const clear = '';
   gallery.innerHTML = clear;
+  hideBtn();
 }
 
 export function showLoader() {

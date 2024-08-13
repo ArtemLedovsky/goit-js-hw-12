@@ -49,15 +49,13 @@ async function handleSearchImages(event) {
     );
     params.maxPage = Math.ceil(totalHits / params.perPage);
     createGallery(hits);
-
     if (params.maxPage > 1) {
       showBtn();
       enableBtn();
       loadMoreBtn.addEventListener('click', handleLoadMore);
+    } else {
+      hideBtn();
     }
-    // else {
-    //   hideBtn();
-    // }
     if (hits.length === 0) {
       iziToast.error({
         message:
